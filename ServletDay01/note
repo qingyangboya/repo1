@@ -1,0 +1,94 @@
+笔记：
+   一、什么是Servlet?
+    概念:是一个扩展web应用程序的组件规范
+    组件：在软件开发行业，符合—定规范，实现部分功能，并且需要部署到容器当中才能运行的软件模块
+    容器：符合—定规范，提供组件运行环境的一个程序
+   二、开发Servlet步骤
+     1.导包servlet-api.jar
+     2.编写一个继承HttpServlet或实现Servlet接口的类
+     3.重写service();
+     4.在web.xml文件中配置相关信息
+        <servlet>
+           <servlet-name>随便写</servlet-name>
+           <servlet-class>你操作的servlet类所在的位置，从包名处开始</servlet-class>
+        </servlet>
+        <servlet-mapping>
+           <servlet-name>随便写:必须和servlet标签中的name一致</servlet-name>
+           <url-pattern>访问路径</url-pattern>
+        </servlet-mapping>
+     5.将项目部署到Tomcat服务器中
+     6.启动服务器，地址栏输入http:ip地址:端口号/项目名/模块名/访问地址
+       例如: http://localhost:8080/ServletDay01/index.jsp
+
+     三、应用程序可能会出现的状态码
+       404：资源路径请求地址出现问题：可能原因是：
+             ① 地址错误（拼写不正确，字母大小写错误）
+             ② web.xml文件中的两个<servlet-name>不一致
+             ③ 工程没有部署
+             ④ Web应用程序部署结构没有遵守Servlet规范
+       405：Web服务器（容器）找不到service()方法处理请求。
+             ① service方法名称写错
+             ② service方法参数类型与标准不一致
+             ③ service方法异常、返回值类型与标准不一致
+       500：程序在运行过程中出错。
+             ① Servlet类没有继承HttpServlet或实现Servlet接口
+             ② web.xml文件中的<servlet-class>写错
+             ③ service方法中的代码运行时抛出异常
+       200：一切ok
+
+     四、HTTP协议
+      概念：
+         是由w3c（万维网联盟）制定的一种应用层协议，用来定义浏览器与web服务器之间
+         如何通信  以及通信的   数据格式
+
+      如何通信：浏览器发送请求通过HTTP协议发送给服务器，服务器解析然后生成结果，再将结果
+              通过HTTP协议响应给浏览器，浏览器通过解析器解析内容显示在网页中。
+
+      数据格式：
+      1、 请求数据包：
+      请求行：请求方式 + 请求资源路径 + 协议版本
+      消息头（若干）：消息头是一些键值对，—般由w3c定义。通信的双方通过消息头来传递一些特定的含义，
+      比如，浏览器可以发送User-Agent消息头告诉Web服务器，浏览器的类型和版本。大部分为自动生成，
+      某些时候自己需要添加消息头。
+      实体内容：只有当请求方式为post时，实体内容才会有数据。（即请求参数）
+
+      2、响应数据包：
+      状态行：协议类型+版本+状态码+状态描述
+      消息头（若干）：Web服务器返回一些消息头给浏览器。例如返回Content-Type消息头，
+      告诉浏览器服务器返回的数据类型和字符集。
+      实体内容：程序处理的结果
+    HttpServletRequest对象代表客户端的请求，当客户端通过HTTP协议访问服务器时，
+    请求中的所有消息都封装在这个对象中，通过这个对象的相关方法可以获取请求数据。
+    作用
+            一 读取和写入HTTP请求数据（请求行、消息头等）
+            一 取得和设置Cookies
+            一 取得路径信息
+            一 标识HTTP会话
+            一 实现请求转发
+
+    HttpServletResponse对象代表提供给客户端的响应，封装了HTTP的响应数据。
+    通过这个对象可设置状态行、消息头、实体内容。
+    作用：
+               一 设置对客户端的输出内容
+               一 设置响应的状态码
+               一 设置浏览器的解码方式
+               一 设置Cookies
+               一 实现重定向
+
+   获取提交信息的方式:
+    获取提交的1：1的Name-Value的方法
+            - getParameter(name)
+    获取提交的1：M的Name-Values的方法
+            - getParameterValues(name)
+
+
+
+
+
+
+
+
+
+
+
+
